@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainBP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: dimgray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdk.MainstageController">
+   <center>
+      <WebView fx:id="webview" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" style="background-color: red;" text="File">
+            <items>
+                  <MenuItem fx:id="newProject" mnemonicParsing="false" onAction="#newProject" text="New Project" />
+              <MenuItem fx:id="openProject" mnemonicParsing="false" text="Open Project" />
+                  <MenuItem fx:id="closeProject" mnemonicParsing="false" text="Close Project" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Build">
+            <items>
+                  <Menu mnemonicParsing="false" text="Build Project">
+                    <items>
+                      <MenuItem fx:id="buildWindows" mnemonicParsing="false" text="Windows" />
+                        <MenuItem fx:id="buildLinux" disable="true" mnemonicParsing="false" text="Linux" />
+                        <MenuItem fx:id="buildMac" disable="true" mnemonicParsing="false" text="Mac" />
+                        <MenuItem fx:id="buildAndroid" disable="true" mnemonicParsing="false" text="Android" />
+                    </items>
+                  </Menu>
+                  <MenuItem disable="true" mnemonicParsing="false" text="Debug (Not Available)" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="help" mnemonicParsing="false" text="Help" />
+                  <MenuItem fx:id="about" mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="refresh" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Refresh" />
+            <Text fx:id="log" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font name="Arial Bold Italic" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

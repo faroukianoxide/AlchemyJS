@@ -1,0 +1,23 @@
+
+
+.app {
+    position:absolute;             
+    left:50%;
+    top:50%;
+    height:50px;                  
+    width:225px;                  
+    text-align:center;
+    padding:180px 100px 0px 10px;     
+    margin:-115px 0px 0px -112px;  
+                                   
+}
+
+h1 {
+    font-size:24px;
+    font-family: "lucida calligraphy";
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
