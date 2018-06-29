@@ -4,7 +4,7 @@ Author : Farouk Ibrahim
 A framework created from scratch that enables you to develop multiplaform PC apps  with web technologies (HTML, CSS and JavaScript). Very simple and straight forward for beginning and advance programmers.<br/>
 
 #GET THE APP<br/>
-Just download the whole project from the repository (with the source code, it's not large!) and navigate to the 'dist' folder
+Download the distribution for your platform or just the jar file from the release page at github.com/Farouk-Ibrahim/AlchemyJS/releases
 
 #REQUIREMENTS<br/>
 To run AlchemyJS You need: <br/>
