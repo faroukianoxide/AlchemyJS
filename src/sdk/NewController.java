@@ -34,7 +34,8 @@ import static sdk.Sdk.editorStage;
  */
 public class NewController {
 
-  
+  	//issue: rename this to 'NewProjectController'
+
     @FXML
     private Button cancel;
     @FXML
@@ -59,61 +60,83 @@ public class NewController {
             projectname = projectName.getText().trim();
             
             try{
-                File projectDir = new File("projects/"+projectname);
-                projectDir.mkdir();
-                ProjectProperty pp = new ProjectProperty();
-                pp.setProjectName(projectname);
-
-                File propFile = new File("projects/"+projectname+"/project.apf");
-                FileOutputStream fs = new FileOutputStream(propFile);
-                ObjectOutputStream os = new ObjectOutputStream(fs);
-                os.writeObject(pp);
-                os.close();
-                new File("projects/"+projectname+"/www").mkdir();
-                File index = new File("projects/"+projectname+"/www/index.html");
-                index.createNewFile();
-                editorStage.setTitle("Avatar Framework - "+projectname);
-                //now save the new state of the sdk
-                sdkState.setOpenedProject(projectname);
-                MainstageController.projectName = projectname;
-                newStage.close();
-                //String page = "kiki/www/index.html";
-                //URL url = this.getClass().getClassLoader().getResource(page);
-                //page = url.toExternalForm();
-                webengine.load(index.toURI().toURL().toExternalForm());
-                logInt.setFill(Color.ORANGE);
-                logInt.setText("Successfully created project "+projectname);
-                Path enginePath = Paths.get("utils/sys.dll"); // the secretly renamed class file
-            Path manifestPath = Paths.get("utils/config.dll"); // the secretly renamed manifest file
-            Path launcherPath = Paths.get("utils/launch.dll");
-            Path launcerNewPath = Paths.get("projects/"+projectname+"/dist/windows/"+projectname+".exe");
-            //create engine path
-            Path engineNewPath = Paths.get("projects/"+projectname+"/engine/Engine.class");
-            //create manifest path  
-
-            Path manifestNewPath = Paths.get("projects/"+projectname+"/properties.file");
-            //www path
-            File projectBuilds = new File("projects/"+projectname);
-            File engineFolder = new File("projects/"+projectname+"/engine");
-            File distFolder = new File("projects/"+projectname+"/dist/windows");            
-            
                 
-                ///now start copying...
-                projectBuilds.mkdirs();
-                engineFolder.mkdirs();
-                distFolder.mkdirs();
-                Files.copy(manifestPath,manifestNewPath); // move manifest
-                Files.copy(enginePath,engineNewPath);//move engine
-                
-                Files.copy(launcherPath,launcerNewPath); // move launcher
-                Desktop de = Desktop.getDesktop();
-                de.open(new File("projects/"+projectname));
+                createProjectDirectory();
+               	saveProjectState();
+                openProjectWorkspace();
+                createDependencies();
+            	copyDependencies();
+
             }catch(Exception e){
                 logInt.setFill(Color.RED);
                 logInt.setText("Project not created, sorry");
                                                                             
             }
         }
+    }
+
+    public void saveProjectState () {
+
+    	File propFile = new File("projects/"+projectname+"/project.apf");
+        FileOutputStream fs = new FileOutputStream(propFile);
+        ObjectOutputStream os = new ObjectOutputStream(fs);
+        os.writeObject(pp);
+        os.close();
+
+    }
+
+    public void openProjectWorkspace () {
+
+    	new File("projects/"+projectname+"/www").mkdir();
+        File index = new File("projects/"+projectname+"/www/index.html");
+        index.createNewFile();
+        editorStage.setTitle("Avatar Framework - "+projectname);
+                //now save the new state of the sdk
+        sdkState.setOpenedProject(projectname);
+        MainstageController.projectName = projectname;
+        newStage.close();
+                //now load project
+         webengine.load(index.toURI().toURL().toExternalForm());
+         logInt.setFill(Color.ORANGE);
+         logInt.setText("Successfully created project "+projectname);
+
+    }
+
+    public void createProjectDirectory () {
+    	File projectDir = new File("projects/"+projectname); // creates the project directory
+        projectDir.mkdir();
+        ProjectProperty pp = new ProjectProperty();
+        pp.setProjectName(projectname);
+    }
+
+    public void createDependencies () {
+
+    	Path enginePath = Paths.get("utils/sys.dll"); // the secretly renamed class file
+        Path manifestPath = Paths.get("utils/config.dll"); // the secretly renamed manifest file
+        Path launcherPath = Paths.get("utils/launch.dll");
+        Path launcerNewPath = Paths.get("projects/"+projectname+"/dist/windows/"+projectname+".exe");
+            //create engine path
+        Path engineNewPath = Paths.get("projects/"+projectname+"/engine/Engine.class");
+            //create manifest path  
+        Path manifestNewPath = Paths.get("projects/"+projectname+"/properties.file");
+            //www path
+        File projectBuilds = new File("projects/"+projectname);
+        File engineFolder = new File("projects/"+projectname+"/engine");
+        File distFolder = new File("projects/"+projectname+"/dist/windows");
+
+    }
+
+    public void copyDependencies () {
+
+    	projectBuilds.mkdirs();
+        engineFolder.mkdirs();
+        distFolder.mkdirs();
+        Files.copy(manifestPath,manifestNewPath); // move manifest
+        Files.copy(enginePath,engineNewPath);//move engine
+        Files.copy(launcherPath,launcerNewPath); // move launcher
+        Desktop de = Desktop.getDesktop();
+        de.open(new File("projects/"+projectname));        
+                
     }
                         
 }

@@ -93,32 +93,42 @@ public class MainstageController {
         
        logInt = log;
        sdkState = new SdkState(); 
-       //webview.setZoom(0);
        webengine = webview.getEngine();
        page = "resources/index.html";
        URL url = this.getClass().getClassLoader().getResource(page);
        page = url.toExternalForm();
        webengine.load(page);
+
+       prepareWebEngine();
+       
+       registerListeners();
+       
+    }
+
+    public void prepareWebEngine () {
+
        webengine.setOnAlert(JSHandlers::alertHandler);
        webengine.setPromptHandler(JSHandlers.getPromptHandler());
        webengine.setJavaScriptEnabled(true);
        webview.setContextMenuEnabled(false);
-       
-       
-       
+    }
+
+    public void registerListeners () {
+
        openProject.setOnAction(e->openProject());
        closeProject.setOnAction(e->closeProject());
        refresh.setOnAction(e->webengine.load(webengine.getLocation()));
-       help.setOnAction(e->help());
+       help.setOnAction(e->showHelp());
        buildWindows.setOnAction(e->buildProject("windows"));
-       about.setOnAction(e->about());
+       about.setOnAction(e->showAppInfo());
     }
      
     public void openProject(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Alchemy project");
         fileChooser.setInitialDirectory(new File("projects/"));  
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Alchemy Project Files","*.apf*"));
+        fileChooser.getExtensionFilters()
+            .add(new FileChooser.ExtensionFilter("Alchemy Project Files","*.apf*"));
         File chosenFile = fileChooser.showOpenDialog(new Stage());
         try{
             String fileLocation = chosenFile.toURI().toURL().toExternalForm();
@@ -193,7 +203,7 @@ public class MainstageController {
             }
     }
     
-    private void about() {
+    private void showAppInfo() {
         Stage aboutStage = new Stage();
         VBox root = new VBox();
         root.setPadding(new Insets(10,0,0,10));
@@ -214,7 +224,7 @@ public class MainstageController {
         aboutStage.initOwner(editorStage);
         aboutStage.show();
     }
-    private void help(){
+    private void showHelp(){
         try{
             logInt.setFill(Color.ORANGE);
             logInt.setText("Opening guide file...");
